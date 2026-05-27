@@ -12,12 +12,17 @@ import Team from "./sections/Team";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Analisis from "./pages/Analisis";
+import Pengaturan from "./pages/Pengaturan";
+
+// ✅ Import layout sidebar dashboard
+import DashboardLayout from "./pages/DashboardLayout";
 
 function App() {
   return (
     <Routes>
 
-      {/* ✅ LANDING PAGE */}
+      {/* ── LANDING PAGE ── */}
       <Route
         path="/"
         element={
@@ -33,12 +38,16 @@ function App() {
         }
       />
 
-      {/* ✅ AUTH PAGE */}
-      <Route path="/login" element={<Login />} />
+      {/* ── AUTH ── */}
+      <Route path="/login"    element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* ✅ DASHBOARD */}
-      <Route path="/dashboard" element={<Dashboard />} />
+      {/* ── DASHBOARD (pakai sidebar layout) ── */}
+      <Route element={<DashboardLayout />}>
+        <Route path="/dashboard"  element={<Dashboard />} />
+        <Route path="/analisis"   element={<Analisis />} />
+        <Route path="/pengaturan" element={<Pengaturan />} />
+      </Route>
 
     </Routes>
   );

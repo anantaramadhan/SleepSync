@@ -1,0 +1,513 @@
+/* ===================================================
+   SLEEPSYNC — DashboardLayout.css
+   Sidebar + Topbar Layout, Light Mode, Responsive
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+
+  --mint-50:  #f0fdf8;
+  --mint-100: #d4f5e9;
+  --mint-200: #a7f3d0;
+  --mint-300: #6ee7b7;
+  --mint-400: #34d399;
+  --mint-500: #10b981;
+  --mint-600: #059669;
+
+  --peach-50:  #fff8f3;
+  --peach-100: #ffe4cc;
+  --peach-300: #ffa06a;
+
+  --neutral-50:  #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+
+  --font-display: 'Outfit', sans-serif;
+  --font-body:    'Nunito', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.09);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===========================
+   ROOT LAYOUT
+   =========================== */
+.dl-root {
+  display: flex;
+  min-height: 100vh;
+  background: #f4fcf8;
+  font-family: var(--font-body);
+}
+
+/* ===========================
+   SIDEBAR
+   =========================== */
+.dl-sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  background: white;
+  border-right: 1.5px solid var(--neutral-100);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 200;
+  height: 100%;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Logo ── */
+.dl-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 24px;
+  border-bottom: 1.5px solid var(--neutral-100);
+  margin-bottom: 16px;
+}
+
+.dl-logo-icon {
+  font-size: 28px;
+  filter: drop-shadow(0 2px 6px rgba(16,185,129,0.3));
+  animation: moonFloat 4s ease-in-out infinite;
+}
+
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.dl-logo-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--neutral-900);
+  letter-spacing: -0.3px;
+}
+
+/* ── Nav Section Label ── */
+.dl-nav-section {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--neutral-400);
+  text-transform: uppercase;
+  padding: 0 10px;
+  margin: 14px 0 6px;
+}
+
+/* ── Nav ── */
+.dl-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dl-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--neutral-500);
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  overflow: hidden;
+}
+
+.dl-nav-item:hover {
+  background: var(--mint-50);
+  color: var(--mint-600);
+  transform: translateX(2px);
+}
+
+.dl-nav-item.active {
+  background: linear-gradient(135deg, var(--mint-50), #d1fae5);
+  color: var(--mint-600);
+  font-weight: 700;
+}
+
+.dl-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  background: var(--mint-500);
+  border-radius: 0 3px 3px 0;
+}
+
+.dl-nav-item.danger {
+  color: #ef4444;
+}
+.dl-nav-item.danger:hover {
+  background: #fff5f5;
+  color: #dc2626;
+}
+
+.dl-nav-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+}
+
+.dl-nav-label { flex: 1; }
+
+.dl-nav-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: var(--mint-100);
+  color: var(--mint-600);
+  flex-shrink: 0;
+}
+
+.dl-nav-badge.new {
+  background: var(--peach-100);
+  color: #c2410c;
+}
+
+/* ── Divider ── */
+.dl-divider {
+  height: 1.5px;
+  background: var(--neutral-100);
+  margin: 12px 4px;
+  border-radius: 99px;
+}
+
+/* ── Sleep Score Widget ── */
+.dl-score-widget {
+  background: linear-gradient(135deg, var(--mint-50), #d1fae5);
+  border: 1.5px solid var(--mint-100);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dl-score-ring {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.dl-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg-s  { fill: none; stroke: var(--neutral-200); stroke-width: 5; }
+.ring-fill-s {
+  fill: none;
+  stroke: var(--mint-500);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 103 126;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 4px rgba(16,185,129,0.35));
+}
+
+.dl-score-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dl-score-num {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--mint-600);
+  line-height: 1;
+}
+
+.dl-score-info { flex: 1; }
+
+.dl-score-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--neutral-700);
+}
+
+.dl-score-sub {
+  font-size: 11px;
+  color: var(--neutral-400);
+  margin-top: 2px;
+}
+
+.dl-score-trend {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mint-500);
+  margin-top: 4px;
+}
+
+/* ── User Card ── */
+.dl-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
+  border-radius: 14px;
+  background: var(--neutral-50);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dl-user:hover { background: var(--neutral-100); }
+
+.dl-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mint-400), var(--mint-300));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.25);
+}
+
+.dl-user-info { flex: 1; overflow: hidden; }
+
+.dl-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--neutral-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dl-user-role {
+  font-size: 11px;
+  color: var(--mint-500);
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+/* ── Logout ── */
+.dl-logout {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ef4444;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+}
+.dl-logout:hover { background: #fff5f5; }
+
+/* ===========================
+   MAIN AREA
+   =========================== */
+.dl-main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+/* ── Top Bar ── */
+.dl-topbar {
+  height: var(--topbar-height);
+  background: white;
+  border-bottom: 1.5px solid var(--neutral-100);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.dl-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.dl-hamburger:hover { background: var(--neutral-100); }
+.dl-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: var(--neutral-600);
+  border-radius: 99px;
+  transition: all 0.2s;
+}
+
+.dl-topbar-logo {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--neutral-900);
+}
+
+/* Breadcrumb */
+.dl-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--neutral-400);
+  flex: 1;
+}
+.dl-breadcrumb-sep { color: var(--neutral-300); }
+.dl-breadcrumb-current {
+  font-weight: 700;
+  color: var(--neutral-700);
+}
+
+.dl-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.dl-topbar-score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--mint-50);
+  border: 1.5px solid var(--mint-100);
+  border-radius: 99px;
+  padding: 5px 13px;
+  font-size: 13px;
+  color: var(--neutral-600);
+}
+
+.score-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--mint-400);
+  box-shadow: 0 0 0 3px rgba(52,211,153,0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(52,211,153,0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(52,211,153,0.08); }
+}
+
+.dl-topbar-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--mint-400), var(--mint-300));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+}
+
+/* ── Page Content ── */
+.dl-content {
+  flex: 1;
+  padding: 28px 28px;
+  overflow-y: auto;
+}
+
+/* ── Overlay ── */
+.dl-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 150;
+  backdrop-filter: blur(2px);
+}
+
+/* ===========================
+   RESPONSIVE — Tablet ≤900px
+   =========================== */
+@media (max-width: 900px) {
+  .dl-sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+  }
+
+  .dl-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .dl-overlay { display: block; }
+
+  .dl-main { margin-left: 0; }
+
+  .dl-hamburger { display: flex; }
+
+  .dl-breadcrumb { display: none; }
+
+  .dl-content { padding: 20px 16px; }
+}
+
+/* ===========================
+   RESPONSIVE — Mobile ≤600px
+   =========================== */
+@media (max-width: 600px) {
+  .dl-topbar { padding: 0 14px; }
+
+  .dl-topbar-logo { display: flex; }
+
+  .dl-topbar-score span:last-child { display: none; }
+  .dl-topbar-score { padding: 5px 10px; gap: 4px; }
+
+  .dl-content { padding: 14px 12px; }
+
+  .dl-score-widget { display: none; }
+}
