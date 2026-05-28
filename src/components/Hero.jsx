@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <>
       <style>{`
@@ -347,9 +350,12 @@ export default function Hero() {
             <p className="hero-desc">
               Analisis Tidur Cerdas untuk Kesehatan Lebih Baik. Membantu Anda Memahami Pola Istirahat, Memprediksi Kualitas Tidur, dan Meningkatkan Produktivitas Setiap Hari.
             </p>
-            <div className="hero-actions">
-              <button className="btn-primary">Mulai Analisis</button>
-            </div>
+            <button 
+  className="btn-primary"
+  onClick={() => navigate("/login")}
+>
+  Mulai Analisis
+</button>
           </div>
 
           <div className="hero-visual">
