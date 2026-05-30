@@ -1,14 +1,52 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Auth.css";
 
+const API_URL = "http://localhost:5000/api";
+
 export default function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Cek apakah baru saja redirect dari Register
+  const justRegistered = new URLSearchParams(location.search).get("registered") === "true";
+
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login:", { email, password });
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login gagal, coba lagi.");
+        return;
+      }
+
+      // Simpan token & data user ke localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect ke dashboard
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Tidak dapat terhubung ke server. Pastikan backend berjalan.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -23,6 +61,20 @@ export default function Login() {
           <h1 className="auth-title">Selamat datang<br />kembali</h1>
           <p className="auth-subtitle">Masuk untuk melihat pola tidur Anda hari ini</p>
         </div>
+
+        {/* Banner sukses setelah registrasi */}
+        {justRegistered && (
+          <div className="auth-success">
+            Akun berhasil dibuat! Silakan masuk.
+          </div>
+        )}
+
+        {/* Tampilkan pesan error jika ada */}
+        {error && (
+          <div className="auth-error">
+            {error}
+          </div>
+        )}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -73,8 +125,8 @@ export default function Login() {
             </div>
           </div>
 
-          <button type="submit" className="btn-primary">
-            Masuk <span className="btn-arrow"></span>
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Memproses..." : "Masuk"} <span className="btn-arrow"></span>
           </button>
         </form>
 

@@ -1,11 +1,14 @@
 import mysql from "mysql2";
+import dotenv from "dotenv";
 
-// Konfigurasi koneksi ke phpMyAdmin (MySQL)
+dotenv.config();
+
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "sleepsync_db",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306,
 });
 
 connection.connect((err) => {
@@ -14,7 +17,10 @@ connection.connect((err) => {
     return;
   }
   console.log(
-    "Terhubung ke database sleepsync_db dengan ID " + connection.threadId
+    "Terhubung ke database " +
+      process.env.DB_NAME +
+      " dengan ID " +
+      connection.threadId
   );
 });
 
